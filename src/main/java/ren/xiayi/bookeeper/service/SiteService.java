@@ -28,8 +28,8 @@ import ren.xiayi.bookeeper.utils.JsonUtils;
 import ren.xiayi.bookeeper.utils.JsoupUtils;
 
 @Component
-public class Jb51DataService {
-	private static final Logger logger = LoggerFactory.getLogger(Jb51DataService.class);
+public class SiteService {
+	private static final Logger logger = LoggerFactory.getLogger(SiteService.class);
 	@Autowired
 	private UrlIndexDao urlIndexDao;
 	@Autowired
@@ -205,18 +205,6 @@ public class Jb51DataService {
 		} finally {
 		}
 
-	}
-
-	public void htmlsnippet() {
-		String sql = "select concat('<a href=\"https://www.baidu.com/s?wd=',b.title,'\">',b.title,'</a>') search,concat('<a href=\"',d.url,'\">',d.url,'</a>') baiduurl,concat('<a href=\"',b.url,'\">',b.url,'</a>') url from z_download_url d left join z_books b on b.id = d.book_id where  d.wx_keyword is not null and d.baidu_password is null limit 1000";
-		List<Map<String, Object>> queryMap = queryDao.queryMap(sql);
-
-		for (Map<String, Object> map : queryMap) {
-			System.out.println("<tr>			<td class='normal' valign='top'>" + map.get("search").toString()
-					+ "</td>			<td class='normal' valign='top'>" + map.get("baiduurl").toString()
-					+ "</td>			<td class='normal' valign='top'>" + map.get("url").toString()
-					+ "</td>			</tr>");
-		}
 	}
 
 }

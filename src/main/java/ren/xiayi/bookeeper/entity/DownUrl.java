@@ -39,5 +39,25 @@ public class DownUrl extends BaseEntity {
 	private String url;
 	private String wxKeyword;
 	private Long bookId;
+	private String baiduPassword;
+	private String baiduUrl;
+
+	@Column(name = "baidu_password")
+	public String getBaiduPassword() {
+		return baiduPassword;
+	}
+
+	public void setBaiduPassword(String baiduPassword) {
+		this.baiduPassword = baiduPassword;
+	}
+
+	@Column(name = "fatyu_baidu_url")
+	public String getBaiduUrl() {
+		return baiduUrl;
+	}
+
+	public void setBaiduUrl(String baiduUrl) {
+		this.baiduUrl = baiduUrl;
+	}
 
 }
