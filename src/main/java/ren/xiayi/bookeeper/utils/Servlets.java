@@ -1,4 +1,4 @@
-package ren.xiayi.bookeeper.web.util;
+package ren.xiayi.bookeeper.utils;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,8 +19,6 @@ import org.springframework.util.CollectionUtils;
 
 import com.google.common.base.Charsets;
 import com.google.common.net.HttpHeaders;
-
-import ren.xiayi.bookeeper.utils.EncodeUtils;
 
 /**
  * Http与Servlet工具类.

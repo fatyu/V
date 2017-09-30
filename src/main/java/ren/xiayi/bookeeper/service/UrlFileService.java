@@ -15,8 +15,8 @@ import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import ren.xiayi.bookeeper.dao.SiteDao;
-import ren.xiayi.bookeeper.entity.Site;
+import ren.xiayi.bookeeper.dao.site.SiteDao;
+import ren.xiayi.bookeeper.entity.site.Site;
 
 @Component
 public class UrlFileService {
@@ -26,6 +26,7 @@ public class UrlFileService {
 	/**
 	 * 获取网站地址
 	 */
+	@SuppressWarnings("deprecation")
 	public void fetchSite() {
 		Iterator<File> files = FileUtils.iterateFiles(new File("e:\\favkeeper\\"), new String[] { "html" }, true);
 

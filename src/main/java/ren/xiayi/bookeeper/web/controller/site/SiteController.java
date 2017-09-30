@@ -1,4 +1,4 @@
-package ren.xiayi.bookeeper.web.controller;
+package ren.xiayi.bookeeper.web.controller.site;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import ren.xiayi.bookeeper.entity.JsonResponseMsg;
 import ren.xiayi.bookeeper.service.UrlFileService;
+import ren.xiayi.bookeeper.web.controller.BaseController;
 
 @Controller
 @RequestMapping("/")

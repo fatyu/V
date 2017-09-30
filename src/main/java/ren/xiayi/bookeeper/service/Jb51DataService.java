@@ -17,13 +17,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import ren.xiayi.bookeeper.dao.BookDao;
-import ren.xiayi.bookeeper.dao.DownUrlDao;
 import ren.xiayi.bookeeper.dao.QueryDao;
-import ren.xiayi.bookeeper.dao.UrlIndexDao;
-import ren.xiayi.bookeeper.entity.Book;
-import ren.xiayi.bookeeper.entity.DownUrl;
-import ren.xiayi.bookeeper.entity.UrlIndex;
+import ren.xiayi.bookeeper.dao.book.BookDao;
+import ren.xiayi.bookeeper.dao.book.DownUrlDao;
+import ren.xiayi.bookeeper.dao.book.UrlIndexDao;
+import ren.xiayi.bookeeper.entity.book.Book;
+import ren.xiayi.bookeeper.entity.book.DownUrl;
+import ren.xiayi.bookeeper.entity.book.UrlIndex;
 import ren.xiayi.bookeeper.utils.JsonUtils;
 import ren.xiayi.bookeeper.utils.JsoupUtils;
 
@@ -36,12 +36,10 @@ public class Jb51DataService {
 	private BookDao bookDao;
 
 	/**
-	 * 获取图书id,地址信息
+	 * 按类别爬取获取图书id,地址信息
 	 */
 	public void fetchBooks() {
-
 		Iterable<UrlIndex> allIndex = urlIndexDao.findAll();
-
 		for (UrlIndex index : allIndex) {
 			String url = index.getUrl();
 			fetchUrl(url);
@@ -121,7 +119,7 @@ public class Jb51DataService {
 			count = bookDao.count();
 		} else {
 			count = ((Number) queryDao
-					.query("select count(1) from z_books where id not in (select book_id  from z_download_url )  "))
+					.query("select count(1) from z_book_info where id not in (select book_id  from z_download_url )  "))
 							.longValue();
 		}
 
@@ -150,10 +148,11 @@ public class Jb51DataService {
 	private List<Map<String, Object>> queryPage(int page, int type) {
 		if (type == 0) {
 
-			return queryDao.queryMap("select id,url from z_books   limit " + (page - 1) * 5 + ",5");
+			return queryDao.queryMap("select id,url from z_book_info   limit " + (page - 1) * 5 + ",5");
 		}
-		return queryDao.queryMap("select * from z_books where id not in (select book_id  from z_download_url )  limit "
-				+ (page - 1) * 5 + ",5");
+		return queryDao
+				.queryMap("select * from z_book_info where id not in (select book_id  from z_download_url )  limit "
+						+ (page - 1) * 5 + ",5");
 	}
 
 	private void fetchDetail(Book book, String url) {
@@ -217,6 +216,40 @@ public class Jb51DataService {
 					+ "</td>			<td class='normal' valign='top'>" + map.get("url").toString()
 					+ "</td>			</tr>");
 		}
+	}
+
+	public void fetchNewBookDetail() {
+		try {
+			Connection directConnection = JsoupUtils.getDirectConnection("http://www.jb51.net/do/book.html", 5000,
+					"http://www.jb51.net");
+			Response response = directConnection.execute();
+			int statusCode = response.statusCode();
+			if (statusCode == 200) {
+				Document doc = directConnection.get();
+				//获取基本信息  获取列表信息,并保存数据库
+				Element ulDiv = doc.getElementById("newmore");
+				if (null != ulDiv) {
+					Elements elements = ulDiv.getElementsByTag("ul").get(0).getElementsByTag("li");
+					for (Element data : elements) {
+						Element href = data.getElementsByTag("a").get(1);
+						String bookUrl = "http://www.jb51.net" + href.attr("href");
+						String title = href.text();
+						Book book = bookDao.findByUrl(bookUrl);
+						if (book == null) {
+							book = new Book();
+						}
+						book.setTitle(title);
+						book.setUrl(bookUrl);
+						book = bookDao.save(book);
+						logger.error(JsonUtils.objectToString(book) + "          ====== 保存成功");
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+		}
+
 	}
 
 }

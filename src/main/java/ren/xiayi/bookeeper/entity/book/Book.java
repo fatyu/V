@@ -1,8 +1,10 @@
-package ren.xiayi.bookeeper.entity;
+package ren.xiayi.bookeeper.entity.book;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
+import ren.xiayi.bookeeper.entity.BaseEntity;
 
 @Entity
 @Table(name = "z_books")
