@@ -44,4 +44,11 @@ public class Jb51BookController extends BaseController {
 		return new JsonResponseMsg().fill(0, "success");
 	}
 
+	@RequestMapping(value = "removeDuplicateBook")
+	@ResponseBody
+	public JsonResponseMsg removeDuplicateBook() {
+		dataService.removeDuplicateBook();
+		return new JsonResponseMsg().fill(0, "success");
+	}
+
 }

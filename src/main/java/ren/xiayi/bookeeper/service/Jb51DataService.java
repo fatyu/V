@@ -234,10 +234,11 @@ public class Jb51DataService {
 						Element href = data.getElementsByTag("a").get(1);
 						String bookUrl = "http://www.jb51.net" + href.attr("href");
 						String title = href.text();
-						Book book = bookDao.findByUrl(bookUrl);
-						if (book == null) {
-							book = new Book();
+						List<Book> books = bookDao.findByUrl(bookUrl);
+						if (CollectionUtils.isNotEmpty(books)) {
+							continue;
 						}
+						Book book = new Book();
 						book.setTitle(title);
 						book.setUrl(bookUrl);
 						book = bookDao.save(book);
@@ -252,4 +253,21 @@ public class Jb51DataService {
 
 	}
 
+	public void removeDuplicateBook() {
+		String sql = "select url from z_book_info where url in (select url from z_book_info group by url having count(id )>1)";
+		List<Map<String, Object>> urls = queryDao.queryMap(sql);
+		if (CollectionUtils.isNotEmpty(urls)) {
+			for (Map<String, Object> url : urls) {
+				List<Book> books = bookDao.findByUrl(url.get("url").toString());
+				if (CollectionUtils.isNotEmpty(books)) {
+					for (int i = 1; i < books.size(); i++) {
+						Book book = books.get(i);
+						logger.error("delete duplicate book :" + JsonUtils.objectToString(book));
+						bookDao.delete(book);
+					}
+				}
+			}
+		}
+
+	}
 }
