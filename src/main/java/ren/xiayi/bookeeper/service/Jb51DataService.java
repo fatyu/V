@@ -125,7 +125,7 @@ public class Jb51DataService {
 			count = bookDao.count();
 		} else {
 			count = ((Number) queryDao
-					.query("select count(1) from z_book_info where id not in (select book_id  from z_download_url )  "))
+					.query("select count(1) from z_book_info where id not in (select book_id  from z_book_url )  "))
 							.longValue();
 		}
 
@@ -150,9 +150,8 @@ public class Jb51DataService {
 
 			return queryDao.queryMap("select id,url from z_book_info   limit " + (page - 1) * 5 + ",5");
 		}
-		return queryDao
-				.queryMap("select * from z_book_info where id not in (select book_id  from z_download_url )  limit "
-						+ (page - 1) * 5 + ",5");
+		return queryDao.queryMap("select * from z_book_info where id not in (select book_id  from z_book_url )  limit "
+				+ (page - 1) * 5 + ",5");
 	}
 
 	private void fetchDetail(Book book, String url) {
@@ -207,7 +206,7 @@ public class Jb51DataService {
 	}
 
 	public void htmlsnippet() {
-		String sql = "select concat('<a href=\"https://www.baidu.com/s?wd=',b.title,'\">',b.title,'</a>') search,concat('<a href=\"',d.url,'\">',d.url,'</a>') baiduurl,concat('<a href=\"',b.url,'\">',b.url,'</a>') url from z_download_url d left join z_books b on b.id = d.book_id where  d.wx_keyword is not null and d.baidu_password is null limit 1000";
+		String sql = "select concat('<a href=\"https://www.baidu.com/s?wd=',b.title,'\">',b.title,'</a>') search,concat('<a href=\"',d.url,'\">',d.url,'</a>') baiduurl,concat('<a href=\"',b.url,'\">',b.url,'</a>') url from z_book_url d left join z_book_info b on b.id = d.book_id where  d.wx_keyword is not null and d.baidu_password is null  and fatyu_baidu_url is null limit 1000";
 		List<Map<String, Object>> queryMap = queryDao.queryMap(sql);
 
 		for (Map<String, Object> map : queryMap) {
