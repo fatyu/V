@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import ren.xiayi.bookeeper.dao.QueryDao;
-import ren.xiayi.bookeeper.dao.book.DownUrlDao;
+import ren.xiayi.bookeeper.dao.book.BookUrlDao;
 import ren.xiayi.bookeeper.entity.JsonResponseMsg;
-import ren.xiayi.bookeeper.entity.book.DownUrl;
+import ren.xiayi.bookeeper.entity.book.BookUrl;
 import ren.xiayi.bookeeper.service.Jb51DataService;
 import ren.xiayi.bookeeper.web.controller.BaseController;
 
@@ -21,7 +21,7 @@ public class BaiduPasswordController extends BaseController {
 	Jb51DataService dataService;
 
 	@Autowired
-	private DownUrlDao downUrlDao;
+	private BookUrlDao bookUrlDao;
 
 	@Autowired
 	private QueryDao queryDao;
@@ -35,9 +35,9 @@ public class BaiduPasswordController extends BaseController {
 		}
 		Number id = queryDao.query(
 				"select id from z_book_url where wx_keyword is not null  and baidu_password is null  order by id desc  limit 1");
-		DownUrl one = downUrlDao.findOne(id.longValue());
+		BookUrl one = bookUrlDao.findOne(id.longValue());
 		one.setBaiduPassword(code);
-		downUrlDao.save(one);
+		bookUrlDao.save(one);
 		return new JsonResponseMsg().fill(0, "success", queryDao.query(
 				"select wx_keyword from z_book_url where wx_keyword is not null  and baidu_password is null order by id desc limit 1"));
 	}

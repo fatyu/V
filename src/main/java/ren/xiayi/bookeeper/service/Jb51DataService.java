@@ -19,11 +19,11 @@ import org.springframework.stereotype.Component;
 
 import ren.xiayi.bookeeper.dao.QueryDao;
 import ren.xiayi.bookeeper.dao.book.BookDao;
-import ren.xiayi.bookeeper.dao.book.DownUrlDao;
-import ren.xiayi.bookeeper.dao.book.UrlIndexDao;
+import ren.xiayi.bookeeper.dao.book.BookUrlDao;
+import ren.xiayi.bookeeper.dao.book.CategoryIndexDao;
 import ren.xiayi.bookeeper.entity.book.Book;
-import ren.xiayi.bookeeper.entity.book.DownUrl;
-import ren.xiayi.bookeeper.entity.book.UrlIndex;
+import ren.xiayi.bookeeper.entity.book.BookUrl;
+import ren.xiayi.bookeeper.entity.book.CategoryIndex;
 import ren.xiayi.bookeeper.utils.JsonUtils;
 import ren.xiayi.bookeeper.utils.JsoupUtils;
 
@@ -31,16 +31,22 @@ import ren.xiayi.bookeeper.utils.JsoupUtils;
 public class Jb51DataService {
 	private static final Logger logger = LoggerFactory.getLogger(Jb51DataService.class);
 	@Autowired
-	private UrlIndexDao urlIndexDao;
+	private CategoryIndexDao categoryIndexDao;
 	@Autowired
 	private BookDao bookDao;
+
+	@Autowired
+	private QueryDao queryDao;
+
+	@Autowired
+	private BookUrlDao bookUrlDao;
 
 	/**
 	 * 按类别爬取获取图书id,地址信息
 	 */
 	public void fetchBooks() {
-		Iterable<UrlIndex> allIndex = urlIndexDao.findAll();
-		for (UrlIndex index : allIndex) {
+		Iterable<CategoryIndex> allIndex = categoryIndexDao.findAll();
+		for (CategoryIndex index : allIndex) {
 			String url = index.getUrl();
 			fetchUrl(url);
 		}
@@ -139,12 +145,6 @@ public class Jb51DataService {
 
 	}
 
-	@Autowired
-	private QueryDao queryDao;
-
-	@Autowired
-	private DownUrlDao downUrlDao;
-
 	private List<Map<String, Object>> queryPage(int page, int type) {
 		if (type == 0) {
 
@@ -183,12 +183,12 @@ public class Jb51DataService {
 				for (Element data : datas) {
 					Element href = data.getElementsByTag("a").get(0);
 					String downloadUrl = href.attr("href");
-					DownUrl downUrl = new DownUrl();
-					downUrl.setBookId(book.getId());
-					downUrl.setUrl(downloadUrl);
-					downUrl.setWxKeyword(wxKeyWord);
-					downUrlDao.save(downUrl);
-					logger.error(JsonUtils.objectToString(downUrl) + "          ====== 保存成功");
+					BookUrl bookUrl = new BookUrl();
+					bookUrl.setBookId(book.getId());
+					bookUrl.setUrl(downloadUrl);
+					bookUrl.setWxKeyword(wxKeyWord);
+					bookUrlDao.save(bookUrl);
+					logger.error(JsonUtils.objectToString(bookUrl) + "          ====== 保存成功");
 					if (book.getType() == 2) {
 						break;
 					}

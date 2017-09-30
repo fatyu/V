@@ -7,7 +7,7 @@ import javax.persistence.Table;
 import ren.xiayi.bookeeper.entity.BaseEntity;
 
 @Entity
-@Table(name = "z_books")
+@Table(name = "z_book_info")
 public class Book extends BaseEntity {
 
 	private static final long serialVersionUID = -2094617561504569070L;

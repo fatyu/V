@@ -7,8 +7,8 @@ import javax.persistence.Table;
 import ren.xiayi.bookeeper.entity.BaseEntity;
 
 @Entity
-@Table(name = "z_url_index")
-public class UrlIndex extends BaseEntity {
+@Table(name = "z_book_index")
+public class CategoryIndex extends BaseEntity {
 	private static final long serialVersionUID = -4311683593514115919L;
 	private String url;
 

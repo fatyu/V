@@ -7,8 +7,8 @@ import javax.persistence.Table;
 import ren.xiayi.bookeeper.entity.BaseEntity;
 
 @Entity
-@Table(name = "z_download_url")
-public class DownUrl extends BaseEntity {
+@Table(name = "z_book_url")
+public class BookUrl extends BaseEntity {
 
 	@Column(name = "url")
 	public String getUrl() {
