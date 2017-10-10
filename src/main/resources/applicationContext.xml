@@ -13,9 +13,9 @@
 		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.3.xsd
 		http://www.springframework.org/schema/task  http://www.springframework.org/schema/task/spring-task-4.0.xsd  ">
 
-	<description>bookeeper Spring Config</description>
+	<description>v.notalk.cc Spring Config</description>
 	<!-- 使用annotation 自动注册bean,并检查@Required,@Autowired的属性已被注入 -->
-	<context:component-scan base-package="ren.xiayi.bookeeper">
+	<context:component-scan base-package="cc.notalk.v">
 		<context:exclude-filter type="annotation"
 			expression="org.springframework.stereotype.Controller" />
 		<context:exclude-filter type="annotation"
@@ -34,7 +34,7 @@
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="jpaVendorAdapter" ref="hibernateJpaVendorAdapter" />
-		<property name="packagesToScan" value="ren.xiayi.bookeeper" />
+		<property name="packagesToScan" value="cc.notalk.v" />
 		<property name="jpaProperties">
 			<props>
 				<prop key="hibernate.cache.use_query_cache">true</prop>
@@ -50,7 +50,7 @@
 		class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
 		<property name="databasePlatform" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
 	</bean>
-	<jpa:repositories base-package="ren.xiayi.bookeeper"
+	<jpa:repositories base-package="cc.notalk.v"
 		transaction-manager-ref="transactionManager"
 		entity-manager-factory-ref="entityManagerFactory" />
 	<!-- Jpa 事务配置 -->
