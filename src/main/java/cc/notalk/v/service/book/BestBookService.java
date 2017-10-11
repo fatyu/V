@@ -1,4 +1,4 @@
-package cc.notalk.v.service;
+package cc.notalk.v.service.book;
 
 import org.jsoup.Connection;
 import org.jsoup.Connection.Response;

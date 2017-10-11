@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cc.notalk.v.entity.JsonResponseMsg;
-import cc.notalk.v.service.UrlFileService;
+import cc.notalk.v.service.site.UrlFileService;
 import cc.notalk.v.web.controller.BaseController;
 
 @Controller

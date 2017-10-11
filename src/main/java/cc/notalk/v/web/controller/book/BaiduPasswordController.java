@@ -10,7 +10,7 @@ import cc.notalk.v.dao.QueryDao;
 import cc.notalk.v.dao.book.BookUrlDao;
 import cc.notalk.v.entity.JsonResponseMsg;
 import cc.notalk.v.entity.book.BookUrl;
-import cc.notalk.v.service.Jb51DataService;
+import cc.notalk.v.service.book.Jb51DataService;
 import cc.notalk.v.web.controller.BaseController;
 
 @Controller
