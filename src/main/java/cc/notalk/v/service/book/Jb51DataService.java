@@ -19,11 +19,11 @@ import org.springframework.stereotype.Component;
 
 import cc.notalk.v.dao.QueryDao;
 import cc.notalk.v.dao.book.BookDao;
+import cc.notalk.v.dao.book.BookIndexDao;
 import cc.notalk.v.dao.book.BookUrlDao;
-import cc.notalk.v.dao.book.CategoryIndexDao;
 import cc.notalk.v.entity.book.Book;
+import cc.notalk.v.entity.book.BookIndex;
 import cc.notalk.v.entity.book.BookUrl;
-import cc.notalk.v.entity.book.CategoryIndex;
 import cc.notalk.v.utils.JsonUtils;
 import cc.notalk.v.utils.JsoupUtils;
 
@@ -31,7 +31,7 @@ import cc.notalk.v.utils.JsoupUtils;
 public class Jb51DataService {
 	private static final Logger logger = LoggerFactory.getLogger(Jb51DataService.class);
 	@Autowired
-	private CategoryIndexDao categoryIndexDao;
+	private BookIndexDao bookIndexDao;
 	@Autowired
 	private BookDao bookDao;
 
@@ -45,8 +45,8 @@ public class Jb51DataService {
 	 * 按类别爬取获取图书id,地址信息
 	 */
 	public void fetchBooks() {
-		Iterable<CategoryIndex> allIndex = categoryIndexDao.findAll();
-		for (CategoryIndex index : allIndex) {
+		Iterable<BookIndex> allIndex = bookIndexDao.findAll();
+		for (BookIndex index : allIndex) {
 			String url = index.getUrl();
 			fetchUrl(url);
 		}
@@ -125,7 +125,7 @@ public class Jb51DataService {
 			count = bookDao.count();
 		} else {
 			count = ((Number) queryDao
-					.query("select count(1) from z_book_info where id not in (select book_id  from z_book_url )  "))
+					.query("select count(1) from v_book_info where id not in (select book_id  from v_book_url )  "))
 							.longValue();
 		}
 
@@ -148,9 +148,9 @@ public class Jb51DataService {
 	private List<Map<String, Object>> queryPage(int page, int type) {
 		if (type == 0) {
 
-			return queryDao.queryMap("select id,url from z_book_info   limit " + (page - 1) * 5 + ",5");
+			return queryDao.queryMap("select id,url from v_book_info   limit " + (page - 1) * 5 + ",5");
 		}
-		return queryDao.queryMap("select * from z_book_info where id not in (select book_id  from z_book_url )  limit "
+		return queryDao.queryMap("select * from v_book_info where id not in (select book_id  from v_book_url )  limit "
 				+ (page - 1) * 5 + ",5");
 	}
 
@@ -206,7 +206,7 @@ public class Jb51DataService {
 	}
 
 	public void htmlsnippet() {
-		String sql = "select concat('<a href=\"https://www.baidu.com/s?wd=',b.title,'\">',b.title,'</a>') search,concat('<a href=\"',d.url,'\">',d.url,'</a>') baiduurl,concat('<a href=\"',b.url,'\">',b.url,'</a>') url from z_book_url d left join z_book_info b on b.id = d.book_id where  d.wx_keyword is not null and d.baidu_password is null  and fatyu_baidu_url is null limit 1000";
+		String sql = "select concat('<a href=\"https://www.baidu.com/s?wd=',b.title,'\">',b.title,'</a>') search,concat('<a href=\"',d.url,'\">',d.url,'</a>') baiduurl,concat('<a href=\"',b.url,'\">',b.url,'</a>') url from v_book_url d left join v_book_info b on b.id = d.book_id where  d.wx_keyword is not null and d.baidu_password is null  and fatyu_baidu_url is null limit 1000";
 		List<Map<String, Object>> queryMap = queryDao.queryMap(sql);
 
 		for (Map<String, Object> map : queryMap) {
@@ -253,7 +253,7 @@ public class Jb51DataService {
 	}
 
 	public void removeDuplicateBook() {
-		String sql = "select url from z_book_info where url in (select url from z_book_info group by url having count(id )>1)";
+		String sql = "select url from v_book_info where url in (select url from v_book_info group by url having count(id )>1)";
 		List<Map<String, Object>> urls = queryDao.queryMap(sql);
 		if (CollectionUtils.isNotEmpty(urls)) {
 			for (Map<String, Object> url : urls) {

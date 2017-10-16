@@ -19,7 +19,7 @@ import cc.notalk.v.dao.site.SiteDao;
 import cc.notalk.v.entity.site.Site;
 
 @Component
-public class UrlFileService {
+public class FileService {
 	@Autowired
 	SiteDao siteDao;
 
@@ -85,7 +85,7 @@ public class UrlFileService {
 	//	}
 
 	public static void main(String[] args) {
-		UrlFileService urlFileService = new UrlFileService();
+		FileService urlFileService = new FileService();
 		urlFileService.fetchSite();
 	}
 

@@ -7,7 +7,7 @@ import javax.persistence.Table;
 import cc.notalk.v.entity.BaseEntity;
 
 @Entity
-@Table(name = "z_site_category")
+@Table(name = "v_site_category")
 public class SiteCategory extends BaseEntity {
 
 	private static final long serialVersionUID = 8867043020340699653L;

@@ -31,15 +31,15 @@ public class BaiduPasswordController extends BaseController {
 	public JsonResponseMsg startBook(String code) {
 		if (StringUtils.isEmpty(code)) {
 			return new JsonResponseMsg().fill(0, "success", queryDao.query(
-					"select wx_keyword from z_book_url where wx_keyword is not null  and baidu_password is null order by id desc limit 1"));
+					"select wx_keyword from v_book_url where wx_keyword is not null  and baidu_password is null order by id desc limit 1"));
 		}
 		Number id = queryDao.query(
-				"select id from z_book_url where wx_keyword is not null  and baidu_password is null  order by id desc  limit 1");
+				"select id from v_book_url where wx_keyword is not null  and baidu_password is null  order by id desc  limit 1");
 		BookUrl one = bookUrlDao.findOne(id.longValue());
 		one.setBaiduPassword(code);
 		bookUrlDao.save(one);
 		return new JsonResponseMsg().fill(0, "success", queryDao.query(
-				"select wx_keyword from z_book_url where wx_keyword is not null  and baidu_password is null order by id desc limit 1"));
+				"select wx_keyword from v_book_url where wx_keyword is not null  and baidu_password is null order by id desc limit 1"));
 	}
 
 	@RequestMapping(value = "search")

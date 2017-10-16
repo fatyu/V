@@ -321,18 +321,6 @@
 			</build>
 		</profile>
 		<profile>
-			<!-- 演示环境 -->
-			<id>qa</id>
-			<build>
-				<filters>
-					<filter>src/main/resources/application.qa.properties</filter>
-				</filters>
-			</build>
-			<properties>
-				<profile.active>qa</profile.active>
-			</properties>
-		</profile>
-		<profile>
 			<!-- 生产环境 -->
 			<id>online</id>
 			<build>

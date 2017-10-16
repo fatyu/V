@@ -7,8 +7,8 @@ import javax.persistence.Table;
 import cc.notalk.v.entity.BaseEntity;
 
 @Entity
-@Table(name = "z_book_index")
-public class CategoryIndex extends BaseEntity {
+@Table(name = "v_book_index")
+public class BookIndex extends BaseEntity {
 	private static final long serialVersionUID = -4311683593514115919L;
 	private String url;
 

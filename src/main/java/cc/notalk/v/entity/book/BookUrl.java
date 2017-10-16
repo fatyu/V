@@ -7,7 +7,7 @@ import javax.persistence.Table;
 import cc.notalk.v.entity.BaseEntity;
 
 @Entity
-@Table(name = "z_book_url")
+@Table(name = "v_book_url")
 public class BookUrl extends BaseEntity {
 
 	@Column(name = "url")

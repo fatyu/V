@@ -7,13 +7,13 @@ import javax.persistence.Table;
 import cc.notalk.v.entity.BaseEntity;
 
 @Entity
-@Table(name = "z_book_info")
+@Table(name = "v_book_info")
 public class Book extends BaseEntity {
 
 	private static final long serialVersionUID = -2094617561504569070L;
-	private String title;// varchar(256)  utf8_general_ci  NO              (NULL)                   select,insert,update,references  标题
-	private String remark;//text          utf8_general_ci  YES             (NULL)                   select,insert,update,references  介绍
-	private Integer type;// tinyint(4)    (NULL)           YES             (NULL)                   select,insert,update,references  1直接下载 2微信获取下载码
+	private String title;// 标题
+	private String remark;//介绍
+	private Integer type;//1直接下载 2微信获取下载码
 	private String url;
 
 	@Column(name = "url")
