@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import cc.notalk.v.dao.site.SiteDao;
 import cc.notalk.v.entity.site.Site;
+import cc.notalk.v.utils.JsonUtils;
 import cc.notalk.v.utils.JsoupUtils;
 
 @Component
@@ -36,6 +37,7 @@ public class UrlService {
 					site.setUrl(url);
 					site.setName(name);
 					siteDao.save(site);
+					System.out.println(JsonUtils.objectToString(site));
 				}
 			}
 		} catch (Exception e) {

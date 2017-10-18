@@ -36,7 +36,6 @@ public class SiteController extends BaseController {
 		for (String uri : urls) {
 			urlService.fetchSite(uri);
 		}
-
 		return new JsonResponseMsg().fill(0, "success");
 
 	}
