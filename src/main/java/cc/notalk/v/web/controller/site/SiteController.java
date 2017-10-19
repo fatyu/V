@@ -28,13 +28,20 @@ public class SiteController extends BaseController {
 		return new JsonResponseMsg().fill(0, "success");
 	}
 
+	/**
+	 * @param url 地址url
+	 * @param filterTagAString支持过滤a标签内容
+	 * @param currentPageValid 是否解析当前页面
+	 * @param depth 深度为1的页面加载
+	 * @return
+	 */
 	@RequestMapping(value = "site/url")
 	@ResponseBody
-	public JsonResponseMsg page2db(String url) {
+	public JsonResponseMsg page2db(String url, String filter, String depth) {
 
 		String[] urls = StringUtils.split(url, "|");
 		for (String uri : urls) {
-			urlService.fetchSite(uri);
+			urlService.fetchSite(uri, filter, depth);
 		}
 		return new JsonResponseMsg().fill(0, "success");
 

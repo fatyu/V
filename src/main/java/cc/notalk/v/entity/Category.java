@@ -22,6 +22,7 @@ public class Category extends BaseEntity {
 		this.code = code;
 	}
 
+	@Column(name = "pid")
 	public Long getPid() {
 		return pid;
 	}
@@ -37,15 +38,6 @@ public class Category extends BaseEntity {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	@Column(name = "pid")
-	public Long getPId() {
-		return pid;
-	}
-
-	public void setPId(Long pid) {
-		this.pid = pid;
 	}
 
 }
