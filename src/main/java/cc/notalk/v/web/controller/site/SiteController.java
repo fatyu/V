@@ -24,7 +24,7 @@ public class SiteController extends BaseController {
 	@RequestMapping(value = "site/file2db")
 	@ResponseBody
 	public JsonResponseMsg file2db() {
-		fileService.fetchSite();
+		fileService.json();
 		return new JsonResponseMsg().fill(0, "success");
 	}
 

@@ -31,7 +31,7 @@
 		<repository>
 			<id>nexus</id>
 			<name>Team Nexus Repository</name>
-			<url>http://172.16.2.52:8081/nexus/content/groups/public</url>
+			<url>http://nexus.wangyuhudong.com/nexus/content/groups/public</url>
 		</repository>
 	</repositories>
 	<dependencies>
@@ -162,6 +162,14 @@
 			<artifactId>xstream</artifactId>
 			<version>1.4.9</version>
 		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
+<dependency>
+    <groupId>com.alibaba</groupId>
+    <artifactId>fastjson</artifactId>
+    <version>1.2.39</version>
+</dependency>
+
 
 		<!-- Test -->
 		<dependency>
