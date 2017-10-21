@@ -23,8 +23,11 @@ public class UrlService {
 
 	/**
 	 * 获取网站地址中a标签地址
-	 * @param depth 页面深度
-	 * @param filterTagAString 过滤a标签
+	 * 
+	 * @param depth
+	 *            页面深度
+	 * @param filterTagAString
+	 *            过滤a标签
 	 */
 	public void fetchSite(String uri, String filterTagAString, String depth) {
 		try {
@@ -64,11 +67,13 @@ public class UrlService {
 					} else {
 						if (!StringUtils.contains(name, filterTagAString)
 								|| !StringUtils.contains(url, filterTagAString)) {
-							Site site = new Site();
-							site.setUrl(url);
-							site.setName(name);
-							site = siteDao.save(site);
-							System.out.println(JsonUtils.objectToString(site));
+							if (StringUtils.startsWith(url, "http")) {
+								Site site = new Site();
+								site.setUrl(url);
+								site.setName(name);
+								site = siteDao.save(site);
+								System.out.println(JsonUtils.objectToString(site));
+							}
 						} else {
 							Site site = new Site();
 							site.setUrl(url);
