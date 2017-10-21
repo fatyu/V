@@ -28,7 +28,7 @@ public class UrlService {
 	 */
 	public void fetchSite(String uri, String filterTagAString, String depth) {
 		try {
-			Connection directConnection = JsoupUtils.getDirectConnection(uri, 5000, "http://www.quqiaoqiao.com");
+			Connection directConnection = JsoupUtils.getDirectConnection(uri, 5000, "http://www.baidu.com");
 			Response response = directConnection.execute();
 			int statusCode = response.statusCode();
 			if (statusCode == 200) {
@@ -41,7 +41,8 @@ public class UrlService {
 						name = a.attr("title");
 					}
 					if (StringUtils.equals(depth, "true")) {
-						if (StringUtils.contains(name, filterTagAString)) {
+						if (StringUtils.contains(name, filterTagAString)
+								|| StringUtils.contains(url, filterTagAString)) {
 							if (StringUtils.contains(url, "http://") || StringUtils.contains(url, "https://")) {
 
 								fetchSite(url);
@@ -61,7 +62,8 @@ public class UrlService {
 						}
 
 					} else {
-						if (!StringUtils.contains(name, filterTagAString)) {
+						if (!StringUtils.contains(name, filterTagAString)
+								|| !StringUtils.contains(url, filterTagAString)) {
 							Site site = new Site();
 							site.setUrl(url);
 							site.setName(name);
@@ -110,5 +112,4 @@ public class UrlService {
 		} finally {
 		}
 	}
-
 }

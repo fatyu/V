@@ -28,7 +28,7 @@ public class FileService {
 	 */
 	@SuppressWarnings("deprecation")
 	public void fetchSite() {
-		Iterator<File> files = FileUtils.iterateFiles(new File("e:\\favkeeper\\"), new String[] { "html" }, true);
+		Iterator<File> files = FileUtils.iterateFiles(new File("e:\\tmp\\"), new String[] { "html" }, true);
 
 		while (files.hasNext()) {
 			File file = files.next();
@@ -54,7 +54,7 @@ public class FileService {
 						site.setName(name);
 						site.setUrl(href);
 						siteDao.save(site);
-						System.out.println(file.getAbsolutePath() + ">>>>>" + name + ":" + href);
+						System.out.println(file.getAbsolutePath() + ">>>>>" + name + ">>>>:" + href);
 					}
 				}
 			} catch (IOException e) {

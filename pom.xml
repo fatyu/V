@@ -170,8 +170,7 @@
 			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
-
-		<!-- Json fastjson&&jackson -->
+		<!-- jackson -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
