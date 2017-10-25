@@ -24,7 +24,7 @@ public class SiteController extends BaseController {
 	@RequestMapping(value = "site/file2db")
 	@ResponseBody
 	public JsonResponseMsg file2db() {
-		fileService.json();
+		fileService.fetchSite();
 		return new JsonResponseMsg().fill(0, "success");
 	}
 
@@ -45,6 +45,13 @@ public class SiteController extends BaseController {
 		}
 		return new JsonResponseMsg().fill(0, "success");
 
+	}
+
+	@RequestMapping(value = "site/content")
+	@ResponseBody
+	public JsonResponseMsg content2File() {
+		urlService.allUrlFetch("E:\\data\\webfile");
+		return new JsonResponseMsg().fill(0, "success");
 	}
 
 }

@@ -55,6 +55,10 @@ public class FileService {
 							e2.printStackTrace();
 						}
 
+						//						if (StringUtils.isBlank(name)) {
+						//							Elements elementsByTag = e.getElementsByTag("img");
+						//							name = elementsByTag.get(0).attr("title");
+						//						}
 						Site site = new Site();
 						site.setName(name);
 						site.setUrl(href);
