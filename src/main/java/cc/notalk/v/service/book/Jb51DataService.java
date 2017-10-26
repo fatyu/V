@@ -205,18 +205,11 @@ public class Jb51DataService {
 
 	}
 
-	public void htmlsnippet() {
-		String sql = "select concat('<a href=\"https://www.baidu.com/s?wd=',b.title,'\">',b.title,'</a>') search,concat('<a href=\"',d.url,'\">',d.url,'</a>') baiduurl,concat('<a href=\"',b.url,'\">',b.url,'</a>') url "
-				+ "from v_book_url d left join v_book_info b on b.id = d.book_id "
-				+ "where  d.wx_keyword is not null and d.baidu_password is null  and fatyu_baidu_url is null order by d.book_id desc limit 1000";
-		List<Map<String, Object>> queryMap = queryDao.queryMap(sql);
-
-		for (Map<String, Object> map : queryMap) {
-			System.out.println("<tr>			<td class='normal' valign='top'>" + map.get("search").toString()
-					+ "</td>			<td class='normal' valign='top'>" + map.get("baiduurl").toString()
-					+ "</td>			<td class='normal' valign='top'>" + map.get("url").toString()
-					+ "</td>			</tr>");
-		}
+	public List<Map<String, Object>> limit5Data() {
+		String sql = "select b.title ,d.id from v_book_url d left join v_book_info b on b.id = d.book_id "
+				+ "where  d.wx_keyword is not null and d.baidu_password is null  and fatyu_baidu_url is null order by d.book_id desc limit 5";
+		List<Map<String, Object>> data = queryDao.queryMap(sql);
+		return data;
 	}
 
 	public void fetchNewBookDetail() {
@@ -271,4 +264,5 @@ public class Jb51DataService {
 		}
 
 	}
+
 }

@@ -9,6 +9,12 @@ import cc.notalk.v.entity.BaseEntity;
 @Entity
 @Table(name = "v_book_url")
 public class BookUrl extends BaseEntity {
+	private static final long serialVersionUID = -2835433118007761240L;
+	private String url;
+	private String wxKeyword;
+	private Long bookId;
+	private String baiduPassword;
+	private String baiduUrl;
 
 	@Column(name = "url")
 	public String getUrl() {
@@ -36,13 +42,6 @@ public class BookUrl extends BaseEntity {
 	public void setBookId(Long bookId) {
 		this.bookId = bookId;
 	}
-
-	private static final long serialVersionUID = -2835433118007761240L;
-	private String url;
-	private String wxKeyword;
-	private Long bookId;
-	private String baiduPassword;
-	private String baiduUrl;
 
 	@Column(name = "baidu_password")
 	public String getBaiduPassword() {
