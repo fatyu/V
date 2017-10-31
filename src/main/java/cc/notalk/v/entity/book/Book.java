@@ -15,6 +15,16 @@ public class Book extends BaseEntity {
 	private String remark;//介绍
 	private Integer type;//1直接下载 2微信获取下载码
 	private String url;
+	private Integer need;
+
+	@Column(name = "need")
+	public Integer getNeed() {
+		return need;
+	}
+
+	public void setNeed(Integer need) {
+		this.need = need;
+	}
 
 	@Column(name = "url")
 	public String getUrl() {

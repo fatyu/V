@@ -7,4 +7,6 @@ import cc.notalk.v.entity.book.BookUrl;
 
 public interface BookUrlDao extends PagingAndSortingRepository<BookUrl, Long>, JpaSpecificationExecutor<BookUrl> {
 
+	BookUrl findByUrl(String downloadUrl);
+
 }

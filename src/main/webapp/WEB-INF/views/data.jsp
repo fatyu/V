@@ -12,12 +12,14 @@
 .medium {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 15px; font-weight: bold; color: #000000; text-decoration: none}
 --></style>
 </head>
-<body>
-<table border=1>
+<body >
+<table border=1  align='center'>
 <c:forEach var="data" items="${data}">
 				<tr>	
-	<td class='normal' valign='top'><a target="_blank" href="https://www.baidu.com/s?wd=${data.title}">${data.title}</a></td>	
+				<td class='normal' valign='top'><a target="_blank" href="${data.url}">${data.title}</a></td>	
 	<td class='normal' valign='top'>${data.id}</td>	
+	<td class='normal' valign='top'><a target="_blank" href="${ctx}/flag/${data.id}/1">下载</a></td>	
+	<td class='normal' valign='top'><a target="_blank" href="${ctx}/flag/${data.id}/0">不下载</a></td>	
 		</tr>
 			</c:forEach>
 </table>

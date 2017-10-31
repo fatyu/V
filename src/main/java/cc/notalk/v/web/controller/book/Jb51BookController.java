@@ -51,4 +51,11 @@ public class Jb51BookController extends BaseController {
 		return new JsonResponseMsg().fill(0, "success");
 	}
 
+	@RequestMapping(value = "downloadFile")
+	@ResponseBody
+	public JsonResponseMsg downloadFile() {
+		jb51DataService.downloadFile();
+		return new JsonResponseMsg().fill(0, "success");
+	}
+
 }

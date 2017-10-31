@@ -24,6 +24,7 @@ import cc.notalk.v.dao.book.BookUrlDao;
 import cc.notalk.v.entity.book.Book;
 import cc.notalk.v.entity.book.BookIndex;
 import cc.notalk.v.entity.book.BookUrl;
+import cc.notalk.v.service.FileDownloadService;
 import cc.notalk.v.utils.JsonUtils;
 import cc.notalk.v.utils.JsoupUtils;
 
@@ -40,6 +41,9 @@ public class Jb51DataService {
 
 	@Autowired
 	private BookUrlDao bookUrlDao;
+
+	@Autowired
+	private FileDownloadService fileDownloadService;
 
 	/**
 	 * 按类别爬取获取图书id,地址信息
@@ -114,7 +118,6 @@ public class Jb51DataService {
 			e.printStackTrace();
 		} finally {
 		}
-
 	}
 
 	public void fetchBookDetail(int type) {
@@ -137,6 +140,7 @@ public class Jb51DataService {
 			if (CollectionUtils.isNotEmpty(books)) {
 				for (Map<String, Object> index : books) {
 					String url = index.get("url").toString();
+
 					Book book = bookDao.findOne(NumberUtils.toLong(index.get("id").toString()));
 					fetchDetail(book, url);
 				}
@@ -180,16 +184,35 @@ public class Jb51DataService {
 				Element ul = urls.get(0);
 				Elements datas = ul.getElementsByTag("li");
 				for (Element data : datas) {
-					Element href = data.getElementsByTag("a").get(0);
-					String downloadUrl = href.attr("href");
-					BookUrl bookUrl = new BookUrl();
-					bookUrl.setBookId(book.getId());
-					bookUrl.setUrl(downloadUrl);
-					bookUrl.setWxKeyword(wxKeyWord);
-					bookUrlDao.save(bookUrl);
-					logger.error(JsonUtils.objectToString(bookUrl) + "          ====== 保存成功");
 					if (book.getType() == 2) {
+						Element href = data.getElementsByTag("a").get(0);
+						String downloadUrl = href.attr("href");
+						BookUrl bookUrl = new BookUrl();
+						bookUrl.setBookId(book.getId());
+						bookUrl.setUrl(downloadUrl);
+						bookUrl.setWxKeyword(wxKeyWord);
+						bookUrlDao.save(bookUrl);
+						logger.error(JsonUtils.objectToString(bookUrl) + "          ====== 保存成功");
 						break;
+					} else {
+						Element href = data.getElementsByTag("a").get(0);
+						String downloadUrl = href.attr("href");
+						System.out.println(downloadUrl);
+						if (StringUtils.contains(downloadUrl, "www.jb51.net/do/softdown.php")) {
+							continue;
+						}
+						if (StringUtils.contains(downloadUrl, "do/plus/download1")) {
+							continue;
+						}
+						if (bookUrlDao.findByUrl(downloadUrl) != null) {
+							continue;
+						}
+						BookUrl bookUrl = new BookUrl();
+						bookUrl.setBookId(book.getId());
+						bookUrl.setUrl(downloadUrl);
+						bookUrl.setWxKeyword(wxKeyWord);
+						bookUrlDao.save(bookUrl);
+						logger.error(JsonUtils.objectToString(bookUrl) + "          ====== 保存成功");
 					}
 				}
 			}
@@ -202,7 +225,6 @@ public class Jb51DataService {
 			e.printStackTrace();
 		} finally {
 		}
-
 	}
 
 	public List<Map<String, Object>> limit5Data() {
@@ -263,6 +285,26 @@ public class Jb51DataService {
 			}
 		}
 
+	}
+
+	public void downloadFile() {
+		String sql = "select   bu.url,  bi.title,bu.id from  v_book_url bu  left join v_book_info bi    on bu.book_id = bi.id where (bu.downloaded is null  or downloaded <> 1 ) and bu.wx_keyword is null  and  bu.url not like '%baidu%' ";
+		List<Map<String, Object>> datas = queryDao.queryMap(sql);
+		for (Map<String, Object> data : datas) {
+			boolean finished = fileDownloadService.downLoad(data.get("url").toString(), "e:\\data\\ebook\\jb51",
+					data.get("title").toString());
+			BookUrl bookUrl = bookUrlDao.findOne(NumberUtils.toLong(data.get("id").toString()));
+			if (finished) {
+				bookUrl.setDownloaded(1);
+				bookUrlDao.save(bookUrl);
+			}
+		}
+	}
+
+	public List<Map<String, Object>> limit100FlagData() {
+		String sql = "select id ,title,url from v_book_info where type =1 and need is null  order by id desc limit 10";
+		List<Map<String, Object>> data = queryDao.queryMap(sql);
+		return data;
 	}
 
 }

@@ -16,6 +16,17 @@ public class BookUrl extends BaseEntity {
 	private String baiduPassword;
 	private String baiduUrl;
 
+	private Integer downloaded;
+
+	@Column(name = "downloaded")
+	public Integer getDownloaded() {
+		return downloaded;
+	}
+
+	public void setDownloaded(Integer downloaded) {
+		this.downloaded = downloaded;
+	}
+
 	@Column(name = "url")
 	public String getUrl() {
 		return url;

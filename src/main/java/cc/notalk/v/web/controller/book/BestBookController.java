@@ -16,10 +16,11 @@ public class BestBookController extends BaseController {
 	@Autowired
 	BestBookService dataService;
 
-	@RequestMapping(value = "books")
+	@RequestMapping(value = "bestcbooks")
 	@ResponseBody
 	public JsonResponseMsg books() {
 		//http://bestcbooks.com/
+		//https://www.jianguoyun.com/p/Dd8libYQyIybBhizxiU
 		dataService.fetchBooks();
 		return new JsonResponseMsg().fill(0, "success");
 	}
