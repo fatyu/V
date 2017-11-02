@@ -48,4 +48,13 @@ public class BookFlagController extends BaseController {
 		}
 		return "success";
 	}
+
+	@RequestMapping(value = "wxflag")
+	public ModelAndView wxflag() {
+		ModelAndView result = new ModelAndView();
+		List<Map<String, Object>> data = dataService.limitWx100FlagData();
+		result.addObject("data", data);
+		result.setViewName("data");
+		return result;
+	}
 }
