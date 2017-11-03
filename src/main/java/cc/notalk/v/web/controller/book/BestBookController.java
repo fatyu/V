@@ -19,8 +19,6 @@ public class BestBookController extends BaseController {
 	@RequestMapping(value = "bestcbooks")
 	@ResponseBody
 	public JsonResponseMsg books() {
-		//http://bestcbooks.com/
-		//https://www.jianguoyun.com/p/Dd8libYQyIybBhizxiU
 		dataService.fetchBooks();
 		return new JsonResponseMsg().fill(0, "success");
 	}

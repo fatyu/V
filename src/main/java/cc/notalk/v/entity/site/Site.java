@@ -15,6 +15,16 @@ public class Site extends BaseEntity {
 	private String img;
 	private Long categoryId;
 	private String url;
+	private Integer status;
+
+	@Column(name = "status")
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
 
 	private Integer recommend;
 

@@ -1,12 +1,19 @@
 package cc.notalk.v.web.controller.site;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
+import cc.notalk.v.dao.site.SiteDao;
 import cc.notalk.v.entity.JsonResponseMsg;
+import cc.notalk.v.entity.site.Site;
 import cc.notalk.v.service.site.FileService;
 import cc.notalk.v.service.site.UrlService;
 import cc.notalk.v.web.controller.BaseController;
@@ -54,6 +61,33 @@ public class SiteController extends BaseController {
 		return new JsonResponseMsg().fill(0, "success");
 	}
 
-	//TODO http://www.alexa.cn/siterank/%E5%B9%BF%E4%B8%9C/2
+	@RequestMapping(value = "site/flag")
+	public ModelAndView flag() {
+		ModelAndView result = new ModelAndView();
+		List<Map<String, Object>> data = urlService.list();
+		result.addObject("data", data);
+		result.setViewName("site");
+		return result;
+	}
+
+	@Autowired
+	SiteDao siteDao;
+
+	@RequestMapping(value = "site/flag/{id}/{status}")
+	public ModelAndView fix(@PathVariable Long id, @PathVariable Integer status) {
+		if (status.intValue() == 1) {
+			siteDao.delete(id);
+		} else {
+			Site site = siteDao.findOne(id);
+			site.setStatus(1);
+			siteDao.save(site);
+		}
+		ModelAndView result = new ModelAndView();
+		result.setViewName("result");
+		result.addObject("command", "close");
+		return result;
+	}
+
+	//http://www.alexa.cn/siterank/%E5%B9%BF%E4%B8%9C/2
 
 }

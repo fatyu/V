@@ -39,14 +39,14 @@ public class BookFlagController extends BaseController {
 
 	@RequestMapping(value = "flag/{id}/{status}")
 	@ResponseBody
-	public String fix(@PathVariable Long id, @PathVariable Integer status) {
+	public ModelAndView fix(@PathVariable Long id, @PathVariable Integer status) {
 		Book book = bookDao.findOne(id);
 		book.setNeed(status);
 		bookDao.save(book);
-		if (status.intValue() == 1) {
-
-		}
-		return "success";
+		ModelAndView result = new ModelAndView();
+		result.setViewName("result");
+		result.addObject("command", "close");
+		return result;
 	}
 
 	@RequestMapping(value = "wxflag")

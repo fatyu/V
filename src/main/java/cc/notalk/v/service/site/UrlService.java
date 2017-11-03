@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -29,6 +31,7 @@ import org.springframework.stereotype.Component;
 import com.google.common.base.Charsets;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
+import cc.notalk.v.dao.QueryDao;
 import cc.notalk.v.dao.site.SiteDao;
 import cc.notalk.v.entity.site.Site;
 import cc.notalk.v.utils.JsonUtils;
@@ -38,6 +41,8 @@ import cc.notalk.v.utils.JsoupUtils;
 public class UrlService {
 	@Autowired
 	SiteDao siteDao;
+	@Autowired
+	QueryDao queryDao;
 
 	/**
 	 * 获取网站地址中a标签地址
@@ -241,6 +246,11 @@ public class UrlService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public List<Map<String, Object>> list() {
+		String sql = " select id, name,  url from v.v_site where status is null limit 20";
+		return queryDao.queryMap(sql);
 	}
 
 }
