@@ -12,7 +12,7 @@
 .medium {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 15px; font-weight: bold; color: #000000; text-decoration: none}
 --></style>
 </head>
-<body >
+<body style="height:900px; overflow-y:scroll; scrollbar-base-color:#ff6600; border:1px solid;" >
 <table border=1  align='center'>
 <c:forEach var="data" items="${data}">
 				<tr>	

@@ -302,7 +302,7 @@ public class Jb51DataService {
 	}
 
 	public List<Map<String, Object>> limit100FlagData() {
-		String sql = "select id ,title,url from v_book_info where type =1 and need is null  order by id desc limit 30";
+		String sql = "select id ,title,url from v_book_info where type =1 and need is null  order by id desc limit 100";
 		List<Map<String, Object>> data = queryDao.queryMap(sql);
 		return data;
 	}

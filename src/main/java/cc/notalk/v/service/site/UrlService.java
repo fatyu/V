@@ -249,8 +249,14 @@ public class UrlService {
 	}
 
 	public List<Map<String, Object>> list() {
-		String sql = " select id, name,  url from v.v_site where status is null limit 20";
+		String sql = " select id, name,  url from v.v_site where status is null limit 40";
 		return queryDao.queryMap(sql);
+	}
+
+	public void flagPage() {
+		String sql = " delete  from v_site where status is null and id in (select * from (SELECT id FROM v.v_site WHERE STATUS IS NULL LIMIT 40) a)";
+		 queryDao.update(sql);
+		
 	}
 
 }

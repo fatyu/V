@@ -23,4 +23,6 @@
 		</tr>
 			</c:forEach>
 </table>
+
+<a target="_blank" href="${ctx}/site/flag/page">delete current page data</a>
 </html>

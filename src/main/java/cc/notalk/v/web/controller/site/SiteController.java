@@ -87,6 +87,14 @@ public class SiteController extends BaseController {
 		result.addObject("command", "close");
 		return result;
 	}
+	@RequestMapping(value = "site/flag/page")
+	public ModelAndView flagPage() {
+		urlService.flagPage();
+		ModelAndView result = new ModelAndView();
+		result.setViewName("result");
+		result.addObject("command", "close");
+		return result;
+	}
 
 	//http://www.alexa.cn/siterank/%E5%B9%BF%E4%B8%9C/2
 
