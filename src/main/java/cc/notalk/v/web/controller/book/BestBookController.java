@@ -9,6 +9,10 @@ import cc.notalk.v.entity.JsonResponseMsg;
 import cc.notalk.v.service.book.BestBookService;
 import cc.notalk.v.web.controller.BaseController;
 
+/**
+ * http://bestcbooks.com/ 书籍信息采集controller
+ */
+@Deprecated
 @Controller
 @RequestMapping("/")
 public class BestBookController extends BaseController {

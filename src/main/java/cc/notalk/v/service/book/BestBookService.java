@@ -17,6 +17,7 @@ import cc.notalk.v.entity.book.Book;
 import cc.notalk.v.entity.book.BookUrl;
 import cc.notalk.v.utils.JsoupUtils;
 
+@Deprecated
 @Component
 public class BestBookService {
 	@Autowired

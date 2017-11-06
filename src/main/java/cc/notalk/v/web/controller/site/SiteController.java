@@ -54,13 +54,6 @@ public class SiteController extends BaseController {
 
 	}
 
-	@RequestMapping(value = "site/content")
-	@ResponseBody
-	public JsonResponseMsg content2File() {
-		urlService.allUrlFetch("E:\\data\\webfile");
-		return new JsonResponseMsg().fill(0, "success");
-	}
-
 	@RequestMapping(value = "site/flag")
 	public ModelAndView flag() {
 		ModelAndView result = new ModelAndView();
@@ -87,6 +80,7 @@ public class SiteController extends BaseController {
 		result.addObject("command", "close");
 		return result;
 	}
+
 	@RequestMapping(value = "site/flag/page")
 	public ModelAndView flagPage() {
 		urlService.flagPage();

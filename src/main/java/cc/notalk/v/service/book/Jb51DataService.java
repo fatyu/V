@@ -301,16 +301,37 @@ public class Jb51DataService {
 		}
 	}
 
-	public List<Map<String, Object>> limit100FlagData() {
-		String sql = "select id ,title,url from v_book_info where type =1 and need is null  order by id desc limit 100";
+	public List<Map<String, Object>> limitFlagData() {
+		String sql = "select id ,title,url from v_book_info where type =1 and need is null  order by id desc limit 10";
 		List<Map<String, Object>> data = queryDao.queryMap(sql);
 		return data;
 	}
 
-	public List<Map<String, Object>> limitWx100FlagData() {
-		String sql = "select id ,title,url from v_book_info where type =2 and need is null  order by id desc limit 100";
+	public List<Map<String, Object>> limitWxFlagData() {
+		String sql = "select id ,title,url from v_book_info where type =2 and need is null  order by id desc limit 10";
 		List<Map<String, Object>> data = queryDao.queryMap(sql);
 		return data;
+	}
+
+	public List<Map<String, Object>> baiduDownload() {
+		String sql = "select b.title ,d.id ,d.url from v_book_url d left join v_book_info b on b.id = d.book_id  where  d.wx_keyword is  null and d.url like  '%baidu.com%'  and downloaded is null  order by d.book_id desc limit 10";
+		List<Map<String, Object>> data = queryDao.queryMap(sql);
+		return data;
+	}
+
+	public void updateWxKeyword(Long id) {
+		BookUrl bookUrl = bookUrlDao.findOne(id);
+		Long bookId = bookUrl.getBookId();
+		Book book = bookDao.findOne(bookId);
+		String data = StringUtils.substringAfterLast(book.getUrl(), "/");
+		bookUrl.setWxKeyword(StringUtils.substringBefore(data, "."));
+		bookUrlDao.save(bookUrl);
+	}
+
+	public void updateBookDownloaded(Long id) {
+		BookUrl bookUrl = bookUrlDao.findOne(id);
+		bookUrl.setDownloaded(1);
+		bookUrlDao.save(bookUrl);
 	}
 
 }

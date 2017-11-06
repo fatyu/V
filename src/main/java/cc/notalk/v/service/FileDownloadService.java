@@ -1,8 +1,6 @@
 package cc.notalk.v.service;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.apache.commons.io.FileUtils;
@@ -20,10 +18,8 @@ public class FileDownloadService {
 			FileUtils.copyURLToFile(new URL(uri), file);
 			finished = true;
 			System.out.println(" 文件下载成功");
-		} catch (MalformedURLException e2) {
-			e2.printStackTrace();
-		} catch (IOException e2) {
-			e2.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		//		// 下载网络文件
 		//		int byteread = 0;

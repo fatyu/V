@@ -255,8 +255,8 @@ public class UrlService {
 
 	public void flagPage() {
 		String sql = " delete  from v_site where status is null and id in (select * from (SELECT id FROM v.v_site WHERE STATUS IS NULL LIMIT 40) a)";
-		 queryDao.update(sql);
-		
+		queryDao.update(sql);
+
 	}
 
 }
