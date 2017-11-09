@@ -98,6 +98,18 @@ public class Jb51BookController extends BaseController {
 		return result;
 	}
 
+	/**
+	 * 更新百度链接不存在书籍状态
+	 * @return
+	 */
+	@RequestMapping(value = "baiduNo")
+	public ModelAndView baiduNo() {
+		ModelAndView result = new ModelAndView();
+		result.setViewName("baidubook");
+		result.addObject("data", jb51DataService.operateBookUrlStatus());
+		return result;
+	}
+
 	@RequestMapping(value = "wxbooks")
 	public ModelAndView bookFix() {
 		ModelAndView result = new ModelAndView();

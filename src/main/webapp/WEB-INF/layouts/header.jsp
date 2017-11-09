@@ -2,7 +2,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 <header class="am-topbar admin-header">
-	<div class="am-topbar-brand">
-		<small>书籍信息</small>
-	</div>
 </header>

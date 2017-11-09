@@ -334,4 +334,34 @@ public class Jb51DataService {
 		bookUrlDao.save(bookUrl);
 	}
 
+	public boolean operateBookUrlStatus() {
+		String sql = "select b.title ,d.id ,d.url from v_book_url d left join v_book_info b on b.id = d.book_id  where  d.wx_keyword is  null  and baidu_password is null and d.url like  '%baidu.com%'  and downloaded is null  order by d.book_id desc limit 30";
+		List<Map<String, Object>> data = queryDao.queryMap(sql);
+		for (Map<String, Object> d : data) {
+			Long id = NumberUtils.toLong(d.get("id").toString());
+			String url = d.get("url").toString();
+
+			try {
+				Connection directConnection = JsoupUtils.getDirectConnection(url, 5000, "pan.baidu.com");
+				Document doc = directConnection.get();
+				System.out.println(doc.html());
+				System.out.println(doc.text());
+				if (StringUtils.contains(doc.text(), "链接错误没找到文件")) {
+					BookUrl urlData = bookUrlDao.findOne(id);
+					urlData.setDownloaded(-1);
+					bookUrlDao.save(urlData);
+				}
+				try {
+					Thread.sleep(RandomUtils.nextInt(1500));
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+			}
+		}
+		return false;
+	}
+
 }
