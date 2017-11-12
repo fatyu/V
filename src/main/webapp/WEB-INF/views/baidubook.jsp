@@ -21,6 +21,8 @@
 		<td class='normal' valign='top'><a target="_blank" href="${ctx}/downloaded/${data.id}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;标记已经下载</a></td>	
 		
 		<td class='normal' valign='top'><a target="_blank" href="${ctx}/needPassword/${data.id}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;数据修复</a></td>	
+		
+		<td class='normal' valign='top'><a target="_blank" href="${ctx}/baiduNo/${data.id}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;链接不存在</a></td>	
 	</tr>
 	</c:forEach>
 </table>

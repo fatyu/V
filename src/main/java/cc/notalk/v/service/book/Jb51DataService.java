@@ -314,7 +314,7 @@ public class Jb51DataService {
 	}
 
 	public List<Map<String, Object>> baiduDownload() {
-		String sql = "select b.title ,d.id ,d.url from v_book_url d left join v_book_info b on b.id = d.book_id  where  d.wx_keyword is  null  and baidu_password is null and d.url like  '%baidu.com%'  and downloaded is null  order by d.book_id desc limit 30";
+		String sql = "select b.title ,d.id ,d.url from v_book_url d left join v_book_info b on b.id = d.book_id  where  d.wx_keyword is  null  and baidu_password is null and d.url like  '%baidu.com%'  and downloaded is null  order by d.book_id desc limit 20";
 		List<Map<String, Object>> data = queryDao.queryMap(sql);
 		return data;
 	}
@@ -325,6 +325,12 @@ public class Jb51DataService {
 		Book book = bookDao.findOne(bookId);
 		String data = StringUtils.substringAfterLast(book.getUrl(), "/");
 		bookUrl.setWxKeyword(StringUtils.substringBefore(data, "."));
+		bookUrlDao.save(bookUrl);
+	}
+
+	public void updateMissStatus(Long id) {
+		BookUrl bookUrl = bookUrlDao.findOne(id);
+		bookUrl.setDownloaded(-1);
 		bookUrlDao.save(bookUrl);
 	}
 

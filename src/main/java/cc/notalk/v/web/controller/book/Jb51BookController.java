@@ -102,11 +102,12 @@ public class Jb51BookController extends BaseController {
 	 * 更新百度链接不存在书籍状态
 	 * @return
 	 */
-	@RequestMapping(value = "baiduNo")
-	public ModelAndView baiduNo() {
+	@RequestMapping(value = "baiduNo/{id}")
+	public ModelAndView baiduNo(@PathVariable Long id) {
 		ModelAndView result = new ModelAndView();
-		result.setViewName("baidubook");
-		result.addObject("data", jb51DataService.operateBookUrlStatus());
+		jb51DataService.updateMissStatus(id);
+		result.setViewName("result");
+		result.addObject("command", "close");
 		return result;
 	}
 
