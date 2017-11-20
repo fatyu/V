@@ -314,7 +314,8 @@ public class Jb51DataService {
 	}
 
 	public List<Map<String, Object>> baiduDownload() {
-		String sql = "select b.title ,d.id ,d.url from v_book_url d left join v_book_info b on b.id = d.book_id  where  d.wx_keyword is  null  and baidu_password is null and d.url like  '%baidu.com%'  and downloaded is null  order by d.book_id desc limit 20";
+		String sql = "select b.title ,d.id ,d.url from v_book_url d left join v_book_info b on b.id = d.book_id  where  d.wx_keyword is  null"
+				+ "  and baidu_password is null and d.url like  '%baidu.com%'  and downloaded is null  order by d.book_id desc limit 30";
 		List<Map<String, Object>> data = queryDao.queryMap(sql);
 		return data;
 	}
