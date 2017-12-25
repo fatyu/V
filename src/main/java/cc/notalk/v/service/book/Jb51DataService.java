@@ -228,8 +228,8 @@ public class Jb51DataService {
 	}
 
 	public List<Map<String, Object>> limit5Data() {
-		String sql = "select b.title ,d.id from v_book_url d left join v_book_info b on b.id = d.book_id "
-				+ "where  d.wx_keyword is not null and d.baidu_password is null  and fatyu_baidu_url is null order by d.book_id desc limit 5";
+		String sql = "select b.title ,d.id,d.url,d.wx_keyword,d.baidu_password from v_book_url d left join v_book_info b on b.id = d.book_id "
+				+ "where  d.wx_keyword is not null  and downloaded is null and fatyu_baidu_url is null order by d.wx_keyword desc limit 1000";
 		List<Map<String, Object>> data = queryDao.queryMap(sql);
 		return data;
 	}
@@ -314,10 +314,20 @@ public class Jb51DataService {
 	}
 
 	public List<Map<String, Object>> baiduDownload() {
-		String sql = "select b.title ,d.id ,d.url from v_book_url d left join v_book_info b on b.id = d.book_id  where  d.wx_keyword is  null"
-				+ "  and baidu_password is null and d.url like  '%baidu.com%'  and downloaded is null  order by d.book_id desc limit 30";
-		List<Map<String, Object>> data = queryDao.queryMap(sql);
-		return data;
+		String sql = "select * from v_book_url where"
+				+ "   downloaded  is null and url not like '%baidu%'";
+		List<Map<String, Object>> datas = queryDao.queryMap(sql);
+		for(Map<String, Object> data :datas				){
+			String url = data.get("url").toString();
+			url = StringUtils.replace(url, "s/1", "share/init?surl=");
+			if(url.startsWith("https")){
+				
+			}else{
+				url = StringUtils.replace(url, "http", "https");
+			}
+			data.put("url", url);
+		}
+		return datas;
 	}
 
 	public void updateWxKeyword(Long id) {
